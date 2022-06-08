@@ -1,9 +1,9 @@
-# <Insert Repository Name Here> Notices
+# EdFi-MSSQL-Install-Scripts Notices
 
 This product includes software developed at the [Ed-Fi
 Alliance](https://www.ed-fi.org).
 
-Copyright (c) 2021 Ed-Fi Alliance, LLC and contributors.
+Copyright (c) 2022 Ed-Fi Alliance, LLC and contributors.
 
 This software distribution includes or contains external references to several
 open source packages that are attributed below in this notice. Where required,
