@@ -1,5 +1,8 @@
 # EdFi-MSSQL-Install-Scripts
 
+| :exclamation: **Experimental** :exclamation: |
+| -------------------------------------------- |
+
 This repo has a small collection of PowerShell 7 scripts for installing the
 Ed-Fi databases into Microsoft SQL Server. The motivating goal is to install the
 EdFi_Admin, EdFi_ODS, and EdFi_Security databases into SQL Server, whether
@@ -8,10 +11,59 @@ to run the full ODS/API source code build and deploy processes. In addition to
 installing the core Ed-Fi ODS/API tables, these scripts also install the Admin
 App tables.
 
-Please note that these scripts will only create a bare database, with no
-descriptors or sample data.
+Usage notes:
 
-See [run.ps1](run.ps1) for a sample script to run these installations.
+* These scripts will only create bare databases, with no descriptors or sample
+  data.
+* The install process must download and unzip a few NuGet packages. These will
+  be placed in a local directory called `.packages`.
+
+## Examples
+
+Sample script to demonstrate use of the modules. Please see the comments in
+[Install-EdFiDatabases.psm1](Install-EdFiDatabases.psm1) for more information
+about alternate configuration options.
+
+Install the Admin and Security databases:
+
+```pwsh
+Import-Module ./Install-EdFiDatabases.psm1 -Force
+
+
+Install-AdminDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1
+Install-AdminAppTables -AdminAppVersion 2.3 -Port 1434 -Username sa -Password super_strong_1
+
+Install-SecurityDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1
+```
+
+Install a single ODS for use in Shared Instance mode:
+
+```pwsh
+Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1
+```
+
+Install two ODS databases for use in Year-Specific mode.
+
+```pwsh
+Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_2022
+Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_2023
+```
+
+Install two ODS databases for use in District-Specific mode
+
+```pwsh
+Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_255901
+Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_255902
+```
+
+Switch to pre-release of ODS/API 6.0 and Admin App 2.4, installed with integrated security on the default path.
+
+```pwsh
+Install-AdminDatabase -OdsApiVersion 6.0 -PreRelease -UseIntegratedSecurity -DatabaseName "EdFi_Admin_Pre"
+Install-AdminAppTables -AdminAppVersion 2.4 -PreRelease -UseIntegratedSecurity -DatabaseName "EdFi_Admin_Pre"
+Install-SecurityDatabase -OdsApiVersion 6.0 -PreRelease -UseIntegratedSecurity -DatabaseName "EdFi_Security_Pre"
+Install-OdsDatabase -OdsApiVersion 6.0 -PreRelease -UseIntegratedSecurity -DatabaseName "EdFi_ODS_Pre"
+```
 
 ## Legal Information
 
