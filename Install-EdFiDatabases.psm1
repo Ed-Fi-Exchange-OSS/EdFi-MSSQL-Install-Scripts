@@ -133,6 +133,10 @@ function Install-AdminAppTables {
         [string]
         $AdminAppVersion,
 
+        # Enable usage of prereleases
+        [Switch]
+        $PreRelease,
+
         # Microsoft SQL Server domain / host name.
         [string]
         $Server = "localhost",
@@ -158,7 +162,7 @@ function Install-AdminAppTables {
         $Password
     )
 
-    $adminAppDir = (Get-AdminAppPackage $AdminAppVersion).Trim()
+    $adminAppDir = (Get-AdminAppPackage -PackageVersion $AdminAppVersion -PreRelease:$PreRelease).Trim()
 
     $arguments = @{
         Server = $Server
@@ -204,6 +208,10 @@ function Install-AdminDatabase {
         [string]
         $OdsApiVersion,
 
+        # Enable usage of prereleases
+        [Switch]
+        $PreRelease,
+
         # Microsoft SQL Server domain / host name.
         [string]
         $Server = "localhost",
@@ -229,7 +237,7 @@ function Install-AdminDatabase {
         $Password
     )
 
-    $restApiDbDir = (Get-RestApiPackage $OdsApiVersion).Trim()
+    $restApiDbDir = (Get-RestApiPackage -PackageVersion $OdsApiVersion -PreRelease:$PreRelease).Trim()
 
     $arguments = @{
         Server = $Server
@@ -278,6 +286,10 @@ function Install-SecurityDatabase {
         [string]
         $OdsApiVersion,
 
+        # Enable usage of prereleases
+        [Switch]
+        $PreRelease,
+
         # Microsoft SQL Server domain / host name.
         [string]
         $Server = "localhost",
@@ -303,7 +315,7 @@ function Install-SecurityDatabase {
         $Password
     )
 
-    $restApiDbDir = (Get-RestApiPackage $OdsApiVersion).Trim()
+    $restApiDbDir = (Get-RestApiPackage -PackageVersion $OdsApiVersion -PreRelease:$PreRelease).Trim()
 
     $arguments = @{
         Server = $Server
@@ -352,6 +364,10 @@ function Install-OdsDatabase {
         [string]
         $OdsApiVersion,
 
+        # Enable usage of prereleases
+        [Switch]
+        $PreRelease,
+
         # Microsoft SQL Server domain / host name.
         [string]
         $Server = "localhost",
@@ -377,7 +393,7 @@ function Install-OdsDatabase {
         $Password
     )
 
-    $restApiDbDir = (Get-RestApiPackage $OdsApiVersion).Trim()
+    $restApiDbDir = (Get-RestApiPackage -PackageVersion $OdsApiVersion -PreRelease:$PreRelease).Trim()
 
     $arguments = @{
         Server = $Server

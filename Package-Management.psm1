@@ -151,17 +151,27 @@ Invalid version string ``$($PackageVersion)``. Should be one, two, or three comp
     "edfi.suite3.restapi.databases.5.3.1146".
 
 .EXAMPLE
-    Get-AdminAppPackage -PackageVersion 5.3
+    Get-RestApiPackage -PackageVersion 5.3
+
+.EXAMPLE
+    Get-RestApiPackage -PackageVersion 6.0 -PreRelease
+
 #>
 function Get-RestApiPackage {
     param (
         # Requested version, example: "5" (latest 5.x.y), "5.1" (latest 5.1.y), "5.1.2" (exact 5.1.2)
         [Parameter(Mandatory=$true)]
         [string]
-        $PackageVersion
+        $PackageVersion,
+
+        # Enable usage of prereleases
+        [Switch]
+        $PreRelease
     )
 
-    Get-NugetPackage -PackageName "EdFi.Suite3.RestApi.Databases" -PackageVersion $PackageVersion | Out-String
+    Get-NugetPackage -PackageName "EdFi.Suite3.RestApi.Databases" `
+        -PreRelease:$PreRelease `
+        -PackageVersion $PackageVersion | Out-String
 }
 
 
@@ -174,19 +184,28 @@ function Get-RestApiPackage {
     "edfi.suite3.installer.adminapp.2.4.10".
 
 .EXAMPLE
-    Get-AdminAppPackage -PackageVersion 2.4.10
+    Get-AdminAppPackage -PackageVersion 2.3
+
+.EXAMPLE
+    Get-AdminAppPackage -PackageVersion 2.4 -PreRelease
 #>
 function Get-AdminAppPackage {
     param (
         # Requested version, example: "2" (latest 2.x.y), "2.4" (latest 2.4.y), "2.4.10" (exact 2.4.10)
         [Parameter(Mandatory=$true)]
         [string]
-        $PackageVersion
+        $PackageVersion,
+
+        # Enable usage of prereleases
+        [Switch]
+        $PreRelease
     )
 
     # Without the pipe to Out-String, the return value was being treated as an
     # object instead of a string, leading to strange behavior.
-    Get-NugetPackage -PackageName "EdFi.Suite3.Ods.AdminApp.Web" -PackageVersion $PackageVersion | Out-String
+    Get-NugetPackage -PackageName "EdFi.Suite3.Ods.AdminApp.Web" `
+        -PreRelease:$PreRelease `
+        -PackageVersion $PackageVersion | Out-String
 }
 
 Export-ModuleMember -Function Get-RestApiPackage, Get-NugetPackage, Get-AdminAppPackage
