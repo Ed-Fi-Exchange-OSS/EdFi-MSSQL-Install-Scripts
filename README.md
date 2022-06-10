@@ -11,10 +11,10 @@ to run the full ODS/API source code build and deploy processes. In addition to
 installing the core Ed-Fi ODS/API tables, these scripts also install the Admin
 App tables.
 
-Usage notes:
+## Usage Notes
 
-* These scripts will only create bare databases, with no descriptors or sample
-  data.
+* These scripts will only create bare databases, with no descriptors, sample
+  data, or extensions.
 * The install process must download and unzip a few NuGet packages. These will
   be placed in a local directory called `.packages`.
 
@@ -30,33 +30,34 @@ Install the Admin and Security databases:
 Import-Module ./Install-EdFiDatabases.psm1 -Force
 
 
-Install-AdminDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1
-Install-AdminAppTables -AdminAppVersion 2.3 -Port 1434 -Username sa -Password super_strong_1
+Install-AdminDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1
+Install-AdminAppTables -AdminAppVersion 2.3 -Username sa -Password super_strong_1
 
-Install-SecurityDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1
+Install-SecurityDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1
 ```
 
 Install a single ODS for use in Shared Instance mode:
 
 ```pwsh
-Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1
+Install-OdsDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1
 ```
 
 Install two ODS databases for use in Year-Specific mode.
 
 ```pwsh
-Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_2022
-Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_2023
+Install-OdsDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_2022
+Install-OdsDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_2023
 ```
 
 Install two ODS databases for use in District-Specific mode
 
 ```pwsh
-Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_255901
-Install-OdsDatabase -OdsApiVersion 5.3 -Port 1434 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_255902
+Install-OdsDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_255901
+Install-OdsDatabase -OdsApiVersion 5.3 -Username sa -Password super_strong_1 -DatabaseName EdFi_Ods_255902
 ```
 
-Switch to pre-release of ODS/API 6.0 and Admin App 2.4, installed with integrated security on the default path.
+Switch to pre-release of ODS/API 6.0 and Admin App 2.4, connecting with
+integrated security and using alternate database names.
 
 ```pwsh
 Install-AdminDatabase -OdsApiVersion 6.0 -PreRelease -UseIntegratedSecurity -DatabaseName "EdFi_Admin_Pre"
